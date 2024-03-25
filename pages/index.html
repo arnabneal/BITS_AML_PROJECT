@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body::after {
+  content: "";
+  background: url('https://steptohealth.com/wp-content/uploads/2018/05/legumes-nutrients.jpg');
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+}
+
+input[type=number] {
+  margin: 10px 0;
+  display: block;
+}
+</style>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h2>Bean Type Finder</h2>
+
+<form id="predictionForm" action="{{ url_for('predict_mod') }}" method="post">
+
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    <div style="flex: 1 0 45%; margin: 10px;">
+      Area: <input type="number" step="any" name="Area">
+      Perimeter: <input type="number" step="any" name="Perimeter">
+      MajorAxisLength: <input type="number" step="any" name="MajorAxisLength">
+      MinorAxisLength: <input type="number" step="any" name="MinorAxisLength">
+      AspectRation: <input type="number" step="any" name="AspectRation">
+      Eccentricity: <input type="number" step="any" name="Eccentricity">
+      ConvexArea: <input type="number" step="any" name="ConvexArea">
+      EquivDiameter: <input type="number" step="any" name="EquivDiameter">
+      
+    </div>
+    <div style="flex: 1 0 45%; margin: 10px;">
+      Extent: <input type="number" step="any" name="Extent">
+      Solidity: <input type="number" step="any" name="Solidity">
+      Roundness: <input type="number" step="any" name="Roundness">
+      Compactness: <input type="number" step="any" name="Compactness">
+      ShapeFactor1: <input type="number" step="any" name="ShapeFactor1">
+      ShapeFactor2: <input type="number" step="any" name="ShapeFactor2">
+      ShapeFactor3: <input type="number" step="any" name="ShapeFactor3">
+      ShapeFactor4: <input type="number" step="any" name="ShapeFactor4">
+    </div>
+  </div>
+  <input type="submit" value="Find the bean type" style="margin-top: 20px;">
+</form>
+
+<div id="predictionResult"></div>
+
+<script>
+    $(document).ready(function () {
+        $('#predictionForm').submit(function (event) {
+            event.preventDefault();
+            var formData = $(this).serializeArray();
+            
+            $.ajax({
+                type: 'POST',
+                url: '/predictmod',
+                contentType: 'application/json',
+                data: JSON.stringify(formData),
+                success: function (response) {
+                    var result = response.predictions;
+                    $('#predictionResult').html('<p>Predicted Class: ' + result + '</p>');
+                },
+                error: function (xhr, status, error) {
+                    console.error(xhr.responseText);
+                    $('#predictionResult').html('<p>Error: Failed to make prediction</p>');
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>

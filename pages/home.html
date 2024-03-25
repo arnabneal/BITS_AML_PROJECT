@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bean Classification Prediction</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+
+<h1>Bean Classification Prediction</h1>
+
+<form id="predictionForm">
+    <label for="Area">Area:</label>
+    <input type="number" id="Area" name="Area" required><br><br>
+
+    <label for="Perimeter">Perimeter:</label>
+    <input type="number" id="Perimeter" name="Perimeter" required><br><br>
+
+    <label for="MajorAxisLength">Major axis length (L):</label>
+        <input type="number" id="MajorAxisLength" name="MajorAxisLength" required><br><br>
+
+        <label for="MinorAxisLength">Minor axis length (l):</label>
+        <input type="number" id="MinorAxisLength" name="MinorAxisLength" required><br><br>
+
+        <label for="AspectRatio">Aspect ratio (K):</label>
+        <input type="number" id="AspectRatio" name="AspectRatio" required><br><br>
+
+        <label for="Eccentricity">Eccentricity (Ec):</label>
+        <input type="number" id="Eccentricity" name="Eccentricity" required><br><br>
+
+        <label for="ConvexArea">Convex area (C):</label>
+        <input type="number" id="ConvexArea" name="ConvexArea" required><br><br>
+
+        <label for="EquivalentDiameter">Equivalent diameter (Ed):</label>
+        <input type="number" id="EquivalentDiameter" name="EquivalentDiameter" required><br><br>
+
+        <label for="Extent">Extent (Ex):</label>
+        <input type="number" id="Extent" name="Extent" required><br><br>
+
+        <label for="Solidity">Solidity (S):</label>
+        <input type="number" id="Solidity" name="Solidity" required><br><br>
+
+        <label for="Roundness">Roundness (R):</label>
+        <input type="number" id="Roundness" name="Roundness" required><br><br>
+
+        <label for="Compactness">Compactness (CO):</label>
+        <input type="number" id="Compactness" name="Compactness" required><br><br>
+
+        <label for="ShapeFactor1">ShapeFactor1 (SF1):</label>
+        <input type="number" id="ShapeFactor1" name="ShapeFactor1" required><br><br>
+
+        <label for="ShapeFactor2">ShapeFactor2 (SF2):</label>
+        <input type="number" id="ShapeFactor2" name="ShapeFactor2" required><br><br>
+
+        <label for="ShapeFactor3">ShapeFactor3 (SF3):</label>
+        <input type="number" id="ShapeFactor3" name="ShapeFactor3" required><br><br>
+
+        <label for="ShapeFactor4">ShapeFactor4 (SF4):</label>
+        <input type="number" id="ShapeFactor4" name="ShapeFactor4" required><br><br>
+
+
+    <button type="submit">Predict</button>
+</form>
+
+<div id="predictionResult"></div>
+
+<script>
+$(document).ready(function() {
+    $('#predictionForm').submit(function(event) {
+        event.preventDefault();
+        var formData = $(this).serializeArray();
+        
+        $.ajax({
+            type: 'POST',
+            url: '/predict',
+            contentType: 'application/json',
+            data: JSON.stringify(formData),
+            success: function(response) {
+                var result = response.predictions;
+                $('#predictionResult').html('<p>Predicted Class: ' + result + '</p>');
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+                $('#predictionResult').html('<p>Error: Failed to make prediction</p>');
+            }
+        });
+    });
+});
+</script>
+
+</body>
+</html>

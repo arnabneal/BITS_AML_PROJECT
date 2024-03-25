@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<style>
+body::after {
+  content: "";
+  background: url('https://steptohealth.com/wp-content/uploads/2018/05/legumes-nutrients.jpg');
+  opacity: 0.3;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  z-index: -1;   
+}
+
+input[type=number] {
+  margin: 10px 0;
+  display: block;
+}
+</style>
+</head>
+<body>
+
+<h2>Bean Type Finder</h2>
+
+<form action="{{ url_for('predictmod') }}" method="post">
+  <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+    <div style="flex: 1 0 45%; margin: 10px;">
+      Area: <input type="number" step="0.01" name="Area">
+      Perimeter: <input type="number" step="0.01" name="Perimeter">
+      MajorAxisLength: <input type="number" step="0.01" name="MajorAxisLength">
+      MinorAxisLength: <input type="number" step="0.01" name="MinorAxisLength">
+      AspectRation: <input type="number" step="0.01" name="AspectRation">
+      Eccentricity: <input type="number" step="0.01" name="Eccentricity">
+      ConvexArea: <input type="number" step="0.01" name="ConvexArea">
+      EquivDiameter: <input type="number" step="0.01" name="EquivDiameter">
+    </div>
+    <div style="flex: 1 0 45%; margin: 10px;">
+      Extent: <input type="number" step="0.01" name="Extent">
+      Solidity: <input type="number" step="0.01" name="Solidity">
+      Roundness: <input type="number" step="0.01" name="Roundness">
+      Compactness: <input type="number" step="0.01" name="Compactness">
+      ShapeFactor1: <input type="number" step="0.01" name="ShapeFactor1">
+      ShapeFactor2: <input type="number" step="0.01" name="ShapeFactor2">
+      ShapeFactor3: <input type="number" step="0.01" name="ShapeFactor3">
+      ShapeFactor4: <input type="number" step="0.01" name="ShapeFactor4">
+    </div>
+  </div>
+  <input type="submit" value="Find the bean type" style="margin-top: 20px;">
+</form>
+
+</body>
+</html>
